@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1>Gerador de senhas seguras</h1>
-      <p class="subtitle">Interface web opcional — mesma lógica do pacote Python (validação e alfabetos).</p>
+      <p class="subtitle">Tudo roda no navegador; aleatoriedade com Web Crypto API.</p>
 
       <form id="form" class="card" autocomplete="off">
         <fieldset>
@@ -52,9 +52,8 @@
       <div id="output" aria-live="polite"></div>
 
       <p class="note">
-        A lógica desta página está duplicada em JavaScript; alterações em
-        <code>src/pwgen/policy.py</code> ou <code>core.py</code> exigem atualizar
-        <code>web/app.js</code> para manter o mesmo comportamento.
+        A regra de geração e validação está em <code>web/app.js</code>. Não há envio
+        das senhas a um servidor nesta página.
       </p>
     </main>
     <script src="app.js" defer></script>

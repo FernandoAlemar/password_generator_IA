@@ -1,5 +1,5 @@
 /**
- * Espelha policy.py e core.py do pacote Python (mesmos limites e alfabetos).
+ * Gerador de senhas no cliente: validação e alfabetos centralizados aqui.
  * RNG: apenas crypto.getRandomValues (sem Math.random).
  */
 

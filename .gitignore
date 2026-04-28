@@ -1,15 +1,17 @@
+.DS_Store
+Thumbs.db
+*.log
+.env
+.venv/
+venv/
+
+# Resíduos comuns se voltar a usar Python no repo
 __pycache__/
 *.py[cod]
-*$py.class
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
-.venv/
-venv/
-env/
-dist/
-build/
 *.egg-info/
 .eggs/
-.env
-*.egg
+dist/
+build/
