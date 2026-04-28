@@ -1,6 +1,6 @@
 # Guia de execução — MVP Gerador de senhas seguras (Unidade 2)
 
-Este documento descreve **como preparar o ambiente, instalar, usar a CLI e validar o projeto** conforme o miniprojeto do plano: core + policy + CLI (`argparse`), testes (`pytest` + `hypothesis`), RNG seguro (`secrets` / `SystemRandom`) e critérios RF01–RF04 (RF05 clipboard opcional).
+Este documento descreve **como preparar o ambiente, instalar, usar a CLI e validar o projeto** conforme o miniprojeto do plano: core + policy + CLI (`argparse`), testes (`pytest` + `hypothesis`), RNG seguro (`secrets` / `SystemRandom`) e critérios **RF01–RF05** (RF05: clipboard com confirmação e limpeza opcional).
 
 ---
 
@@ -74,9 +74,12 @@ Com o ambiente virtual **ativado** e a instalação concluída:
 | Comprimento e quantidade (RF01, RF04) | `gerar-senha --length 20 --count 3` |
 | Desligar símbolos / dígitos / maiúsculas / minúsculas (RF02) | `gerar-senha --no-symbols` (idem `--no-digits`, `--no-upper`, `--no-lower`) |
 | Política mínima: ≥1 de cada conjunto selecionado (RF03) | `gerar-senha --length 16 --require-each` |
+| Copiar para o clipboard após confirmar (RF05; exige `--count 1`) | `gerar-senha --copy` |
+| RF05 com limpeza tardia do clipboard (segundos; só se o texto ainda for a senha) | `gerar-senha --copy --copy-clear-after 45` |
 
 **Saída:** uma senha por linha no **stdout**.  
-**Erros de validação:** mensagem no **stderr**, código de saída **2**.
+**Erros de validação:** mensagem no **stderr**, código de saída **2**.  
+**RF05:** depende de **`pyperclip`** (dependência principal do projeto). Responda `s`/`sim`/`y` para copiar; `N` ou Enter cancela. **`--copy`** com `--count` diferente de **1** termina com código **2**.
 
 ### Executar sem instalar o entrypoint (alternativa)
 
@@ -161,7 +164,7 @@ flowchart LR
 - [ ] `python -m pytest` — todos os testes passando  
 - [ ] Repositório com `.gitignore` adequado (`__pycache__`, `.venv`, `.pytest_cache`, etc.)  
 - [ ] README ou documentação com objetivo e exemplos (ver [README.md](README.md))  
-- [ ] (Opcional) RF05: copiar para área de transferência com confirmação — não faz parte do núcleo atual do plano  
+- [ ] RF05: `gerar-senha --copy` pede confirmação antes de copiar; opcional `--copy-clear-after N`  
 
 ---
 
@@ -216,7 +219,7 @@ Abaixo, um exemplo **já preenchido** para o projeto **gerador de senhas seguras
 | Letra | Significado | Preenchimento (este projeto) |
 |-------|-------------|------------------------------|
 | **C** — Contexto | Projeto, stack, restrições | MVP da Unidade 2 em **Python 3.10+**, pacote em `src/pwgen/`, CLI com **argparse**, testes com **pytest** e **hypothesis**, RNG seguro com **`secrets.choice`** e embaralhamento com **`SystemRandom`** em produção; **sem** API REST, **sem** banco de dados. |
-| **O** — Objetivo | O que deve ser entregue | Implementar ou revisar geração de senhas com comprimento 8–64, flags para minúsculas/maiúsculas/dígitos/símbolos, `--count`, `--require-each`, saída no stdout, código de saída 2 em erro de validação; core **sem** dependência de CLI para facilitar testes. |
+| **O** — Objetivo | O que deve ser entregue | Implementar ou revisar geração de senhas com comprimento 8–64, flags para minúsculas/maiúsculas/dígitos/símbolos, `--count`, `--require-each`, saída no stdout, **RF05** (`--copy` com confirmação, `pyperclip`, opcional `--copy-clear-after`), código de saída 2 em erro de validação; core **sem** dependência de CLI para facilitar testes. |
 | **S** — Estilo e convenções | Padrões de código e Git | **Conventional Commits** em português (`feat(cli): …`, `docs(readme): …`); formatação/lint com **ruff**; tipagem e nomes alinhados aos módulos existentes (`core`, `policy`, `cli`). |
 | **T** — Tom | Como escrever textos | Documentação e mensagens de erro em **português**, **claro** e **direto**; termos técnicos (CLI, stdout, stderr) quando necessário. |
 | **A** — Audiência | Quem lê ou usa | Corretor da disciplina, colegas do curso e desenvolvedores que clonam o repositório; assume familiaridade básica com terminal e Python. |
