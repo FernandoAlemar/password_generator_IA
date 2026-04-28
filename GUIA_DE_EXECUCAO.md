@@ -24,10 +24,14 @@ cd d:\gerarSenha
 
 ## 3. Rodar localmente
 
-### Abrir direto o HTML
+### Abrir a página no navegador (ficheiro local)
 
-1. Entre na pasta `web/`.
-2. Abra **`index.html`** no navegador (duplo clique ou arrastar para a janela).
+1. Abre no Explorador de ficheiros a pasta **`web/`** do projeto (ex.: após `cd d:\gerarSenha`, o ficheiro é `d:\gerarSenha\web\index.html`).
+2. **Duplo clique** em **`index.html`**, ou **arrasta** o ficheiro para uma janela do Chrome, Edge ou Firefox.  
+   Outra forma: no navegador, menu **Ficheiro → Abrir ficheiro…** (`Ctrl+O`) e seleciona `index.html` dentro de `web/`.
+3. Verifica na barra de endereços um URL **`file:///…/web/index.html`**; a página carrega `styles.css` e `app.mjs` a partir da mesma pasta.
+
+**Limitação:** com `file://`, **Copiar resultado** costuma falhar ou pedir permissões extra; para testar a cópia, usa a secção seguinte (servidor HTTP).
 
 ### Servidor HTTP (recomendado para testar “Copiar resultado”)
 

@@ -9,7 +9,16 @@ Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para 
 
 ## Como executar
 
-**Opção 1 — abrir o arquivo:** vá até a pasta `web/` e abra **`index.html`** no navegador (duplo clique ou arrastar o arquivo para a janela). `styles.css` e `app.mjs` são carregados por caminhos relativos na mesma pasta.
+### Abrir a página no navegador
+
+**Opção 1 — ficheiro local (`file://`):**
+
+1. No Explorador de ficheiros (Windows), abre a pasta **`web/`** dentro do repositório, por exemplo `d:\gerarSenha\web\`.
+2. Faz **duplo clique** em **`index.html`**, ou arrasta esse ficheiro para uma janela do Chrome, Edge ou Firefox.  
+   Alternativa: no navegador, **Ficheiro → Abrir ficheiro…** (ou `Ctrl+O`) e escolhe `web\index.html`.
+3. Confirma na barra de endereços um URL do tipo `file:///…/web/index.html`. Os recursos `styles.css` e `app.mjs` carregam por caminhos relativos na mesma pasta.
+
+**Nota:** em `file://`, o botão **Copiar resultado** pode não funcionar; nesse caso usa a Opção 2.
 
 **Opção 2 — servidor HTTP local (recomendado para clipboard):** sirva a pasta `web/` com qualquer servidor de arquivos estáticos do seu ambiente (por exemplo extensão **Live Server** / “Simple Browser” no editor, ou o preview HTTP que você já usa). Acesse a URL que o servidor indicar (em geral algo como `http://127.0.0.1:...`). Assim a API de **copiar** costuma funcionar melhor do que em `file://`.
 
