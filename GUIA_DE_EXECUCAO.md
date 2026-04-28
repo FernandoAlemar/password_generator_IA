@@ -81,6 +81,18 @@ Com o ambiente virtual **ativado** e a instalação concluída:
 **Erros de validação:** mensagem no **stderr**, código de saída **2**.  
 **RF05:** depende de **`pyperclip`** (dependência principal do projeto). Responda `s`/`sim`/`y` para copiar; `N` ou Enter cancela. **`--copy`** com `--count` diferente de **1** termina com código **2**.
 
+### Interface web (opcional, HTML estático)
+
+Há uma página em [web/index.html](web/index.html) com formulário equivalente à CLI (comprimento, conjuntos, “garantir um de cada”, quantidade até 20). O gerador no navegador usa **`window.crypto.getRandomValues`** (sem `Math.random`). A lógica de validação e de montagem da senha está **espelhada** em [web/app.js](web/app.js): ao mudar [src/pwgen/policy.py](src/pwgen/policy.py) ou [src/pwgen/core.py](src/pwgen/core.py), revise o JavaScript para não divergir.
+
+Na raiz do repositório:
+
+```bash
+python -m http.server 8080 --directory web
+```
+
+Acesse `http://localhost:8080`. O botão **Copiar resultado** usa a API de clipboard do navegador (em geral exige contexto seguro, como `localhost`).
+
 ### Executar sem instalar o entrypoint (alternativa)
 
 Útil para depuração, com `PYTHONPATH` apontando para `src`:
@@ -135,6 +147,7 @@ python -m ruff format src tests
 | [src/pwgen/policy.py](src/pwgen/policy.py) | Validação (comprimento 8–64, conjuntos, `--require-each`) |
 | [src/pwgen/cli.py](src/pwgen/cli.py) | `argparse`, saída e código de saída |
 | [tests/](tests/) | `test_core`, `test_policy`, `test_cli` (+ Hypothesis onde aplicável) |
+| [web/](web/) | Interface HTML opcional (`index.html`, `app.js`, `styles.css`) |
 
 ### Diagrama do fluxo (Mermaid)
 

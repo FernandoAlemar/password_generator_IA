@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerador de senhas seguras</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Gerador de senhas seguras</h1>
+      <p class="subtitle">Interface web opcional — mesma lógica do pacote Python (validação e alfabetos).</p>
+
+      <form id="form" class="card" autocomplete="off">
+        <fieldset>
+          <legend>Comprimento e quantidade</legend>
+          <div class="row">
+            <label>
+              Comprimento (8–64)
+              <input id="length" type="number" min="8" max="64" value="16" required />
+            </label>
+            <label>
+              Quantidade (1–20)
+              <input id="count" type="number" min="1" max="20" value="1" required />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Conjuntos de caracteres</legend>
+          <div class="row">
+            <label><input id="useLower" type="checkbox" checked /> Minúsculas</label>
+            <label><input id="useUpper" type="checkbox" checked /> Maiúsculas</label>
+            <label><input id="useDigits" type="checkbox" checked /> Dígitos</label>
+            <label><input id="useSymbols" type="checkbox" checked /> Símbolos</label>
+          </div>
+          <div class="row">
+            <label>
+              <input id="requireEach" type="checkbox" />
+              Garantir ao menos um caractere de cada conjunto marcado
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button type="submit">Gerar</button>
+          <button type="button" id="btnCopy" class="secondary">Copiar resultado</button>
+        </div>
+      </form>
+
+      <div id="error" role="alert" aria-live="polite"></div>
+      <div id="output" aria-live="polite"></div>
+
+      <p class="note">
+        A lógica desta página está duplicada em JavaScript; alterações em
+        <code>src/pwgen/policy.py</code> ou <code>core.py</code> exigem atualizar
+        <code>web/app.js</code> para manter o mesmo comportamento.
+      </p>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>
