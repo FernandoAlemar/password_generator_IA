@@ -1,27 +1,33 @@
 # Gerador de senhas seguras
 
-Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para comprimento (8–64), conjuntos de caracteres, política mínima (ao menos um de cada conjunto marcado) e quantidade (1–20). A aleatoriedade usa apenas **`window.crypto.getRandomValues`** (sem `Math.random()`).
+Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para comprimento (8–64), conjuntos de caracteres, política mínima (ao menos um de cada conjunto marcado) e quantidade (1–20). A mesma lógica de validação e geração está em **`web/password.mjs`**, reutilizada pela página (`app.mjs`) e pela **CLI Node** (`cli.mjs`). A aleatoriedade usa apenas **`crypto.getRandomValues`** (sem `Math.random()`).
 
 ## Requisitos
 
-- Navegador moderno (Chrome, Firefox, Edge ou equivalente)
+- Navegador moderno (Chrome, Firefox, Edge ou equivalente) — para a interface em `web/`
+- [Node.js](https://nodejs.org/) **19 ou superior** — apenas para a CLI (`cli.mjs` / `npx gerar-senha`)
 
 ## Como executar
 
-**Opção 1 — abrir o arquivo:** vá até a pasta `web/` e abra **`index.html`** no navegador (duplo clique ou arrastar o arquivo para a janela). `styles.css` e `app.js` são carregados por caminhos relativos na mesma pasta.
+**Opção 1 — abrir o arquivo:** vá até a pasta `web/` e abra **`index.html`** no navegador (duplo clique ou arrastar o arquivo para a janela). `styles.css` e `app.mjs` são carregados por caminhos relativos na mesma pasta.
 
 **Opção 2 — servidor HTTP local (recomendado para clipboard):** sirva a pasta `web/` com qualquer servidor de arquivos estáticos do seu ambiente (por exemplo extensão **Live Server** / “Simple Browser” no editor, ou o preview HTTP que você já usa). Acesse a URL que o servidor indicar (em geral algo como `http://127.0.0.1:...`). Assim a API de **copiar** costuma funcionar melhor do que em `file://`.
+
+**Opção 3 — linha de comando (Node.js):** na raiz do repositório, execute `npm install` (registra o binário localmente) e use `npx gerar-senha --help` ou, em desenvolvimento, `node cli.mjs --length 20 --count 2`. Cada senha sai em uma linha no stdout; erros de validação vão para stderr e o processo termina com código **2**.
 
 ## Estrutura
 
 - [web/index.html](web/index.html) — página e formulário
-- [web/app.js](web/app.js) — validação, geração e cópia para o clipboard (**JSDoc** em todas as funções públicas e helpers relevantes)
+- [web/password.mjs](web/password.mjs) — núcleo: validação e geração com Web Crypto (**JSDoc**)
+- [web/app.mjs](web/app.mjs) — formulário, eventos e cópia para o clipboard
 - [web/styles.css](web/styles.css) — estilos
+- [cli.mjs](cli.mjs) — CLI que importa o mesmo `password.mjs`
+- [package.json](package.json) — `type: "module"`, `engines.node` e `bin.gerar-senha`
 
 ## Segurança (lembretes)
 
 - Prefira senhas longas (16+) e um gerenciador de senhas.
-- Não envie senhas geradas para servidores desconhecidos; tudo roda **no seu navegador**.
+- Não envie senhas geradas para servidores desconhecidos; a página roda **no seu navegador** e a CLI roda **localmente no Node** — sem backend próprio neste repositório.
 
 ## Arquitetura (diagrama Mermaid)
 
@@ -31,11 +37,15 @@ Fluxo típico desta aplicação (sem backend):
 flowchart LR
   User[Usuario]
   UI[HTML_CSS]
-  App[app_js]
+  App[app_mjs]
+  Lib[password_mjs]
+  Cli[cli_mjs]
   RNG[WebCrypto]
   User -->|preenche_e_gera| UI
   UI -->|eventos| App
-  App -->|getRandomValues| RNG
+  App --> Lib
+  Cli --> Lib
+  Lib -->|getRandomValues| RNG
   App -->|atualiza_tela| User
 ```
 
@@ -54,7 +64,7 @@ Este projeto adota **[Conventional Commits](https://www.conventionalcommits.org/
 | `docs` | Documentação |
 | `chore` | Manutenção |
 
-**Escopos sugeridos:** `web`, `readme`, `guia`.
+**Escopos sugeridos:** `web`, `cli`, `readme`, `guia`.
 
 **Exemplos:**
 

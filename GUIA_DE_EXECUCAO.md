@@ -1,6 +1,6 @@
 # Guia de execução — Gerador de senhas (web estática)
 
-Este repositório contém **apenas** a interface em [web/](web/): HTML, CSS e JavaScript, sem backend.
+Este repositório contém a interface em [web/](web/) (HTML, CSS, JavaScript) **e** uma CLI Node na raiz (`cli.mjs`) que reutiliza o mesmo núcleo [web/password.mjs](web/password.mjs). Não há servidor de aplicação próprio no repositório.
 
 ---
 
@@ -10,6 +10,7 @@ Este repositório contém **apenas** a interface em [web/](web/): HTML, CSS e Ja
 |------|---------|
 | Navegador | Chrome, Firefox, Edge ou equivalente |
 | Git | Opcional, para clonar o repositório |
+| Node.js | **19+** para a CLI (`npm install`, `npx gerar-senha`) |
 
 ---
 
@@ -35,15 +36,30 @@ Sirva a pasta **`web/`** como site estático com a ferramenta que preferir no se
 - Use **Gerar** para criar senhas conforme o formulário.
 - **Copiar resultado** usa `navigator.clipboard` (costuma exigir contexto `http(s):`, não `file:`).
 
+### Linha de comando (mesma lógica que o front)
+
+Na **raiz** do clone (não dentro de `web/`):
+
+1. Instale e registe o binário local: `npm install`
+2. Ajuda: `npx gerar-senha --help`
+3. Exemplo: `npx gerar-senha --length 24 --count 3 --require-each` ou `node cli.mjs ...`
+
+O navegador continua a usar só ficheiros estáticos servidos a partir de `web/`; a CLI importa `web/password.mjs` no Node.
+
 ---
+
+
 
 ## 4. Estrutura
 
 | Caminho | Função |
 |---------|--------|
 | [web/index.html](web/index.html) | Estrutura da página e campos |
-| [web/app.js](web/app.js) | Validação (8–64, conjuntos, política mínima), geração com `crypto.getRandomValues` |
+| [web/password.mjs](web/password.mjs) | Núcleo: validação e geração com `crypto.getRandomValues` |
+| [web/app.mjs](web/app.mjs) | Formulário, eventos e cópia para o clipboard |
 | [web/styles.css](web/styles.css) | Aparência e contraste |
+| [cli.mjs](cli.mjs) (raiz) | CLI Node; importa `password.mjs` |
+| [package.json](package.json) | `type: "module"`, `bin`, `engines` |
 
 ---
 
@@ -55,15 +71,19 @@ Sirva a pasta **`web/`** como site estático com a ferramenta que preferir no se
 flowchart LR
   User[Usuario]
   UI[HTML_CSS]
-  App[app_js]
+  App[app_mjs]
+  Lib[password_mjs]
+  Cli[cli_mjs]
   RNG[WebCrypto]
   User -->|preenche_e_gera| UI
   UI -->|eventos| App
-  App -->|getRandomValues| RNG
+  App --> Lib
+  Cli --> Lib
+  Lib -->|getRandomValues| RNG
   App -->|atualiza_tela| User
 ```
 
-**Nota:** o fluxo didático **Cliente → API → Service → Repository → Storage** do material refere-se a sistemas com API e persistência. Aqui tudo ocorre **no cliente** (navegador), sem camada de API própria.
+**Nota:** o fluxo didático **Cliente → API → Service → Repository → Storage** do material refere-se a sistemas com API e persistência. Aqui a geração ocorre **no navegador** (módulo `password.mjs` via `app.mjs`) ou **no terminal** (mesmo `password.mjs` via `cli.mjs`), sem camada de API própria neste repositório.
 
 ---
 
@@ -71,6 +91,7 @@ flowchart LR
 
 - [ ] `web/index.html` abre no navegador e o formulário funciona
 - [ ] Com servidor local, “Copiar resultado” funciona quando aplicável
+- [ ] `npx gerar-senha --help` e geração na CLI funcionam (Node 19+)
 - [ ] README atualizado e repositório no Git com histórico claro
 
 ---
@@ -97,7 +118,7 @@ docs(guia): detalha execução com servidor estático local
 ```
 
 ```bash
-git add web/app.js
+git add web/app.mjs web/password.mjs
 git commit -m "fix(web): corrige mensagem de validação"
 ```
 
@@ -111,8 +132,8 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 
 | Letra | Significado | Preenchimento (este projeto) |
 |-------|-------------|------------------------------|
-| **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**, front **estático**: `web/index.html`, `web/app.js`, `web/styles.css`; sem backend; aleatoriedade com **`crypto.getRandomValues`**. |
-| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia para clipboard; mensagens de erro claras em português; **código 100% documentado (JSDoc + regra abaixo)**. |
+| **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**: `web/index.html`, `web/password.mjs`, `web/app.mjs`, `web/styles.css`, `cli.mjs`; front estático; CLI Node; aleatoriedade com **`crypto.getRandomValues`**. |
+| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia no navegador e/ou saída na CLI; mensagens de erro claras em português; **código 100% documentado (JSDoc + regra abaixo)**. |
 | **S** — Estilo e convenções | Padrões | **Conventional Commits** em português; JS legível, sem dependências de build obrigatórias; **obrigatório:** documentação inline completa no mesmo PR/commit que introduz o código. |
 | **T** — Tom | Como escrever | Textos de UI, mensagens de erro e **JSDoc** em **português** (ou termos técnicos universais quando inevitáveis), diretos. |
 | **A** — Audiência | Quem usa | Usuário final no navegador; corretor/colegas lendo o repositório; quem mantém o JS precisa entender funções só lendo os comentários. |
@@ -120,13 +141,13 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 
 **Exemplo de prompt curto (inclui obrigatoriedade de documentar):**
 
-> **Contexto:** Repositório `gerarSenha`, arquivo `web/app.js`.  
+> **Contexto:** Repositório `gerarSenha`, ficheiros `web/password.mjs` / `web/app.mjs`.  
 > **Objetivo:** Limitar quantidade máxima a 10 em vez de 20.  
 > **Estilo:** Conventional Commits; não adicionar frameworks; **todo código entregue com JSDoc completo**.  
 > **Tom:** técnico, português.  
 > **Audiência:** mantenedor.  
-> **Resposta:** patch em `app.js` e `index.html` se o `max` do input mudar; **cada função tocada deve ter bloco `/** … */` atualizado**.
+> **Resposta:** patch em `password.mjs`, `app.mjs` e `index.html` se o `max` do input mudar; **cada função tocada deve ter bloco `/** … */` atualizado**.
 
 ---
 
-*Última atualização: projeto somente web estática.*
+*Última atualização: web estática em `web/` + CLI Node na raiz.*
