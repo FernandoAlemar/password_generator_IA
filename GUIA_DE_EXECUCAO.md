@@ -133,6 +133,25 @@ python -m ruff format src tests
 | [src/pwgen/cli.py](src/pwgen/cli.py) | `argparse`, saída e código de saída |
 | [tests/](tests/) | `test_core`, `test_policy`, `test_cli` (+ Hypothesis onde aplicável) |
 
+### Diagrama do fluxo (Mermaid)
+
+**Vantagens de diagramas como código (Mermaid):** versionáveis no Git, fáceis de revisar em pull request e de atualizar quando a arquitetura mudar.
+
+**Nota:** o fluxo didático **Cliente → API → Service → Repository → Storage** descreve sistemas com **API e armazenamento**. Aqui o “cliente” é o **usuário no terminal**; não há API REST nem repositório de dados — apenas **CLI**, **policy** (regras) e **core** (geração com `secrets` / RNG injetável nos testes).
+
+```mermaid
+flowchart LR
+  Usuario[Usuario_no_terminal]
+  CLI[cli_argparse]
+  Policy[policy_validacao]
+  Core[core_geracao]
+  Usuario -->|flags_e_gerar_senha| CLI
+  CLI -->|monta_GenerationParams| Policy
+  Policy -->|validate_ok| Core
+  Core -->|lista_de_senhas| CLI
+  CLI -->|stdout_stderr| Usuario
+```
+
 ---
 
 ## 9. Checklist rápido de “pronto para entrega”
@@ -185,6 +204,32 @@ git commit -m "docs(readme): inclui guia de execução"
 Convém commitar **antes** de incluir `.venv/`; o `.gitignore` já ignora ambientes virtuais comuns.
 
 O padrão também está resumido no [README.md](README.md).
+
+---
+
+## 11. CO-STAR (exemplo para este MVP)
+
+O acrônimo **CO-STAR** organiza um prompt (ou um pedido de implementação) em partes: **C**ontexto, **O**bjetivo, **E**stilo, **T**om, **A**udiência, **R**esposta esperada.
+
+Abaixo, um exemplo **já preenchido** para o projeto **gerador de senhas seguras** (repositório `gerarSenha`), útil como modelo ao usar IA generativa ou ao descrever tarefas para a equipe.
+
+| Letra | Significado | Preenchimento (este projeto) |
+|-------|-------------|------------------------------|
+| **C** — Contexto | Projeto, stack, restrições | MVP da Unidade 2 em **Python 3.10+**, pacote em `src/pwgen/`, CLI com **argparse**, testes com **pytest** e **hypothesis**, RNG seguro com **`secrets.choice`** e embaralhamento com **`SystemRandom`** em produção; **sem** API REST, **sem** banco de dados. |
+| **O** — Objetivo | O que deve ser entregue | Implementar ou revisar geração de senhas com comprimento 8–64, flags para minúsculas/maiúsculas/dígitos/símbolos, `--count`, `--require-each`, saída no stdout, código de saída 2 em erro de validação; core **sem** dependência de CLI para facilitar testes. |
+| **S** — Estilo e convenções | Padrões de código e Git | **Conventional Commits** em português (`feat(cli): …`, `docs(readme): …`); formatação/lint com **ruff**; tipagem e nomes alinhados aos módulos existentes (`core`, `policy`, `cli`). |
+| **T** — Tom | Como escrever textos | Documentação e mensagens de erro em **português**, **claro** e **direto**; termos técnicos (CLI, stdout, stderr) quando necessário. |
+| **A** — Audiência | Quem lê ou usa | Corretor da disciplina, colegas do curso e desenvolvedores que clonam o repositório; assume familiaridade básica com terminal e Python. |
+| **R** — Formato da resposta | O que se espera como saída | Código Python nos caminhos corretos; comandos reproduzíveis no README/guia; para revisão de arquitetura, preferir **diagrama Mermaid** no markdown; testes automatizados passando. |
+
+**Exemplo de prompt curto usando a mesma lógica:**
+
+> **Contexto:** Repositório `gerarSenha`, Python, `src/pwgen/core.py` e `policy.py`.  
+> **Objetivo:** Ajustar a validação para aceitar apenas comprimentos pares (hipotético).  
+> **Estilo:** Manter Conventional Commits e não quebrar os testes existentes.  
+> **Tom:** técnico, em português.  
+> **Audiência:** mantenedor do projeto.  
+> **Resposta:** diff sugerido + atualizar `test_policy.py` se necessário.
 
 ---
 
