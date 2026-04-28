@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1>Gerador de senhas seguras</h1>
-      <p class="subtitle">Tudo roda no navegador; aleatoriedade com Web Crypto API.</p>
+      <p class="subtitle">Informe a configuração desejada para a senha.</p>
 
       <form id="form" class="card" autocomplete="off">
         <fieldset>
@@ -51,10 +51,7 @@
       <div id="error" role="alert" aria-live="polite"></div>
       <div id="output" aria-live="polite"></div>
 
-      <p class="note">
-        A regra de geração e validação está em <code>web/password.mjs</code>. Não há envio
-        das senhas a um servidor nesta página.
-      </p>
+
     </main>
     <script type="module" src="app.mjs"></script>
   </body>
