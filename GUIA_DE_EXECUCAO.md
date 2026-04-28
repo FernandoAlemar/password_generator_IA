@@ -111,23 +111,25 @@ O padrão também está resumido no [README.md](README.md).
 
 ## 11. CO-STAR (exemplo para este MVP)
 
+Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **CO-STAR** no prompt. **Regra obrigatória deste repositório:** o fonte gerado ou alterado deve sair **completamente documentado** — em JavaScript, **JSDoc** em todo `function`/API relevante (`@param`, `@returns`, `@typedef` quando couber); em HTML, comentários ou texto de apoio onde esclarecer comportamento; nada de funções “misteriosas” sem explicar propósito e contratos.
+
 | Letra | Significado | Preenchimento (este projeto) |
 |-------|-------------|------------------------------|
 | **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**, front **estático**: `web/index.html`, `web/app.js`, `web/styles.css`; sem backend; aleatoriedade com **`crypto.getRandomValues`**. |
-| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia para clipboard; mensagens de erro claras em português. |
-| **S** — Estilo e convenções | Padrões | **Conventional Commits** em português; JS legível, sem dependências de build obrigatórias. |
-| **T** — Tom | Como escrever | Textos de UI e documentação em **português**, diretos. |
-| **A** — Audiência | Quem usa | Usuário final no navegador; corretor/colegas lendo o repositório. |
-| **R** — Formato da resposta | Saída esperada | Alterações em `web/`; se pedir diagrama, **Mermaid** no markdown. |
+| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia para clipboard; mensagens de erro claras em português; **código 100% documentado (JSDoc + regra abaixo)**. |
+| **S** — Estilo e convenções | Padrões | **Conventional Commits** em português; JS legível, sem dependências de build obrigatórias; **obrigatório:** documentação inline completa no mesmo PR/commit que introduz o código. |
+| **T** — Tom | Como escrever | Textos de UI, mensagens de erro e **JSDoc** em **português** (ou termos técnicos universais quando inevitáveis), diretos. |
+| **A** — Audiência | Quem usa | Usuário final no navegador; corretor/colegas lendo o repositório; quem mantém o JS precisa entender funções só lendo os comentários. |
+| **R** — Formato da resposta | Saída esperada | Alterações em `web/` **com JSDoc em todas as funções novas ou alteradas**; se pedir diagrama, **Mermaid** no markdown; **não aceitar** entrega de lógica sem documentação equivalente. |
 
-**Exemplo de prompt curto:**
+**Exemplo de prompt curto (inclui obrigatoriedade de documentar):**
 
 > **Contexto:** Repositório `gerarSenha`, arquivo `web/app.js`.  
 > **Objetivo:** Limitar quantidade máxima a 10 em vez de 20.  
-> **Estilo:** Conventional Commits; não adicionar frameworks.  
+> **Estilo:** Conventional Commits; não adicionar frameworks; **todo código entregue com JSDoc completo**.  
 > **Tom:** técnico, português.  
 > **Audiência:** mantenedor.  
-> **Resposta:** patch em `app.js` e `index.html` se o `max` do input mudar.
+> **Resposta:** patch em `app.js` e `index.html` se o `max` do input mudar; **cada função tocada deve ter bloco `/** … */` atualizado**.
 
 ---
 
