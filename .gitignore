@@ -2,16 +2,4 @@
 Thumbs.db
 *.log
 .env
-.venv/
-venv/
-
-# Resíduos comuns se voltar a usar Python no repo
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-*.egg-info/
-.eggs/
-dist/
-build/
+node_modules/

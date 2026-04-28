@@ -1,6 +1,6 @@
 # Guia de execução — Gerador de senhas (web estática)
 
-Este repositório contém **apenas** a interface em [web/](web/): HTML, CSS e JavaScript, sem backend nem pacote Python.
+Este repositório contém **apenas** a interface em [web/](web/): HTML, CSS e JavaScript, sem backend.
 
 ---
 
@@ -10,7 +10,6 @@ Este repositório contém **apenas** a interface em [web/](web/): HTML, CSS e Ja
 |------|---------|
 | Navegador | Chrome, Firefox, Edge ou equivalente |
 | Git | Opcional, para clonar o repositório |
-| Python | Opcional, **3.x** — só para o servidor HTTP de desenvolvimento |
 
 ---
 
@@ -22,22 +21,19 @@ cd d:\gerarSenha
 
 ---
 
-## 3. Rodar localmente (recomendado)
+## 3. Rodar localmente
 
-Na **raiz** do repositório:
+### Abrir direto o HTML
 
-```bash
-python -m http.server 8080 --directory web
-```
+1. Entre na pasta `web/`.
+2. Abra **`index.html`** no navegador (duplo clique ou arrastar para a janela).
 
-Acesse **http://localhost:8080**.
+### Servidor HTTP (recomendado para testar “Copiar resultado”)
+
+Sirva a pasta **`web/`** como site estático com a ferramenta que preferir no seu ambiente (extensão de **Live Server** / preview no editor, hospedagem estática de teste, etc.). Acesse a URL indicada (em geral `http://127.0.0.1` com alguma porta).
 
 - Use **Gerar** para criar senhas conforme o formulário.
-- **Copiar resultado** usa `navigator.clipboard` (em geral funciona em `localhost` ou HTTPS).
-
-### Alternativa sem Python
-
-Se o seu ambiente tiver outro servidor estático (por exemplo `npx serve web`), pode usá-lo da mesma forma, servindo a pasta `web/`.
+- **Copiar resultado** usa `navigator.clipboard` (costuma exigir contexto `http(s):`, não `file:`).
 
 ---
 
@@ -73,8 +69,8 @@ flowchart LR
 
 ## 6. Checklist rápido
 
-- [ ] `python -m http.server 8080 --directory web` e página abre em `localhost`
-- [ ] Geração e validação batem com as regras do formulário
+- [ ] `web/index.html` abre no navegador e o formulário funciona
+- [ ] Com servidor local, “Copiar resultado” funciona quando aplicável
 - [ ] README atualizado e repositório no Git com histórico claro
 
 ---
@@ -97,7 +93,7 @@ docs(readme): inclui guia de execução
 ```text
 feat(web): melhora feedback visual de erros
 fix(web): corrige cópia no Safari
-docs(guia): documenta porta alternativa do http.server
+docs(guia): detalha execução com servidor estático local
 ```
 
 ```bash
