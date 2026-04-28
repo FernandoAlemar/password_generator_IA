@@ -15,6 +15,8 @@ Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para 
 
 **Opção 3 — linha de comando (Node.js):** na raiz do repositório, execute `npm install` (registra o binário localmente) e use `npx gerar-senha --help` ou, em desenvolvimento, `node cli.mjs --length 20 --count 2`. Cada senha sai em uma linha no stdout; erros de validação vão para stderr e o processo termina com código **2**.
 
+**Testes (`npm test`):** na raiz, com Node 19+, `npm test` corre a suíte [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) — validação de parâmetros, caracteres só do alfabeto permitido, política “um de cada conjunto” com `requireEach` e uma verificação de fumo de unicidade entre gerações.
+
 ## Estrutura
 
 - [web/index.html](web/index.html) — página e formulário
@@ -22,7 +24,8 @@ Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para 
 - [web/app.mjs](web/app.mjs) — formulário, eventos e cópia para o clipboard
 - [web/styles.css](web/styles.css) — estilos
 - [cli.mjs](cli.mjs) — CLI que importa o mesmo `password.mjs`
-- [package.json](package.json) — `type: "module"`, `engines.node` e `bin.gerar-senha`
+- [package.json](package.json) — `type: "module"`, `engines.node`, `bin.gerar-senha` e script `test`
+- [test/password.test.mjs](test/password.test.mjs) — testes automatizados do núcleo (`npm test`)
 
 ## Segurança (lembretes)
 
@@ -64,7 +67,7 @@ Este projeto adota **[Conventional Commits](https://www.conventionalcommits.org/
 | `docs` | Documentação |
 | `chore` | Manutenção |
 
-**Escopos sugeridos:** `web`, `cli`, `readme`, `guia`.
+**Escopos sugeridos:** `web`, `cli`, `test`, `readme`, `guia`.
 
 **Exemplos:**
 

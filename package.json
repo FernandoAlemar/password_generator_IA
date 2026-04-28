@@ -11,6 +11,7 @@
     "gerar-senha": "cli.mjs"
   },
   "scripts": {
-    "cli": "node cli.mjs"
+    "cli": "node cli.mjs",
+    "test": "node --test ./test/password.test.mjs"
   }
 }

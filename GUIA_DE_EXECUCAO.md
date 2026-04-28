@@ -10,7 +10,7 @@ Este repositório contém a interface em [web/](web/) (HTML, CSS, JavaScript) **
 |------|---------|
 | Navegador | Chrome, Firefox, Edge ou equivalente |
 | Git | Opcional, para clonar o repositório |
-| Node.js | **19+** para a CLI (`npm install`, `npx gerar-senha`) |
+| Node.js | **19+** para a CLI e testes (`npm install`, `npx gerar-senha`, `npm test`) |
 
 ---
 
@@ -46,9 +46,16 @@ Na **raiz** do clone (não dentro de `web/`):
 
 O navegador continua a usar só ficheiros estáticos servidos a partir de `web/`; a CLI importa `web/password.mjs` no Node.
 
+### Testes automatizados (`npm test`)
+
+Na **raiz** do repositório (com Node 19+):
+
+1. `npm test` — executa [`node:test`](https://nodejs.org/api/test.html) sobre [test/password.test.mjs](test/password.test.mjs).
+2. O ficheiro importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e uma verificação de fumo de unicidade entre várias gerações.
+
+Equivalente direto: `node --test ./test/password.test.mjs`.
+
 ---
-
-
 
 ## 4. Estrutura
 
@@ -59,7 +66,8 @@ O navegador continua a usar só ficheiros estáticos servidos a partir de `web/`
 | [web/app.mjs](web/app.mjs) | Formulário, eventos e cópia para o clipboard |
 | [web/styles.css](web/styles.css) | Aparência e contraste |
 | [cli.mjs](cli.mjs) (raiz) | CLI Node; importa `password.mjs` |
-| [package.json](package.json) | `type: "module"`, `bin`, `engines` |
+| [package.json](package.json) | `type: "module"`, `bin`, `engines`, script `test` |
+| [test/password.test.mjs](test/password.test.mjs) | Testes do núcleo (`npm test` / `node:test`) |
 
 ---
 
@@ -92,6 +100,7 @@ flowchart LR
 - [ ] `web/index.html` abre no navegador e o formulário funciona
 - [ ] Com servidor local, “Copiar resultado” funciona quando aplicável
 - [ ] `npx gerar-senha --help` e geração na CLI funcionam (Node 19+)
+- [ ] `npm test` passa (testes do `password.mjs`)
 - [ ] README atualizado e repositório no Git com histórico claro
 
 ---
@@ -114,12 +123,18 @@ docs(readme): inclui guia de execução
 ```text
 feat(web): melhora feedback visual de erros
 fix(web): corrige cópia no Safari
+test(password): cobre validate com requireEach
 docs(guia): detalha execução com servidor estático local
 ```
 
 ```bash
 git add web/app.mjs web/password.mjs
 git commit -m "fix(web): corrige mensagem de validação"
+```
+
+```bash
+git add test/password.test.mjs web/password.mjs
+git commit -m "test(password): reforça validação e geração"
 ```
 
 O padrão também está resumido no [README.md](README.md).
@@ -132,8 +147,8 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 
 | Letra | Significado | Preenchimento (este projeto) |
 |-------|-------------|------------------------------|
-| **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**: `web/index.html`, `web/password.mjs`, `web/app.mjs`, `web/styles.css`, `cli.mjs`; front estático; CLI Node; aleatoriedade com **`crypto.getRandomValues`**. |
-| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia no navegador e/ou saída na CLI; mensagens de erro claras em português; **código 100% documentado (JSDoc + regra abaixo)**. |
+| **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**: `web/index.html`, `web/password.mjs`, `web/app.mjs`, `web/styles.css`, `cli.mjs`, `test/password.test.mjs`; front estático; CLI Node; testes `node:test`; aleatoriedade com **`crypto.getRandomValues`**. |
+| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia no navegador e/ou saída na CLI; mensagens de erro claras em português; **testes automatizados** do núcleo (`npm test`); **código 100% documentado (JSDoc + regra abaixo)**. |
 | **S** — Estilo e convenções | Padrões | **Conventional Commits** em português; JS legível, sem dependências de build obrigatórias; **obrigatório:** documentação inline completa no mesmo PR/commit que introduz o código. |
 | **T** — Tom | Como escrever | Textos de UI, mensagens de erro e **JSDoc** em **português** (ou termos técnicos universais quando inevitáveis), diretos. |
 | **A** — Audiência | Quem usa | Usuário final no navegador; corretor/colegas lendo o repositório; quem mantém o JS precisa entender funções só lendo os comentários. |
@@ -150,4 +165,4 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 
 ---
 
-*Última atualização: web estática em `web/` + CLI Node na raiz.*
+*Última atualização: web estática em `web/` + CLI Node na raiz + testes `node:test` em `test/`.*
