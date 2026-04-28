@@ -1,0 +1,10 @@
+# https://editorconfig.org — evita salvar Markdown em UTF-16 (que quebra no VS Code como UTF-8)
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.{md,html,css,js}]
+charset = utf-8
