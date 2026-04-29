@@ -6,7 +6,7 @@
  */
 
 export const MIN_LENGTH = 8;
-export const MAX_LENGTH = 65;
+export const MAX_LENGTH = 64;
 export const MAX_COUNT = 20;
 
 export const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
@@ -16,7 +16,7 @@ export const SYMBOLS = "!@#$%&*_-+=?";
 
 /**
  * @typedef {Object} GenerationParams
- * @property {number} length comprimento desejado (8–65)
+ * @property {number} length comprimento desejado (8–64)
  * @property {boolean} useLower incluir minúsculas
  * @property {boolean} useUpper incluir maiúsculas
  * @property {boolean} useDigits incluir dígitos

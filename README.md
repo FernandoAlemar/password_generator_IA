@@ -1,6 +1,6 @@
 # Gerador de senhas seguras
 
-Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para comprimento (8–65), conjuntos de caracteres, política mínima (ao menos um de cada conjunto marcado) e quantidade (1–20). A mesma lógica de validação e geração está em **`web/password.mjs`**, reutilizada pela página (`app.mjs`) e pela **CLI Node** (`cli.mjs`). A aleatoriedade usa apenas **`crypto.getRandomValues`** (sem `Math.random()`).
+Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para comprimento (8–64), conjuntos de caracteres, política mínima (ao menos um de cada conjunto marcado) e quantidade (1–20). A mesma lógica de validação e geração está em **`web/password.mjs`**, reutilizada pela página (`app.mjs`) e pela **CLI Node** (`cli.mjs`). A aleatoriedade usa apenas **`crypto.getRandomValues`** (sem `Math.random()`).
 
 ## Requisitos
 
