@@ -12,13 +12,14 @@ if (!globalThis.crypto?.getRandomValues) {
   globalThis.crypto = webcrypto;
 }
 
-const { validate, generatePassword, MAX_COUNT } = await import("./web/password.mjs");
+const { validate, generatePassword, MAX_COUNT, MAX_LENGTH, MIN_LENGTH } =
+  await import("./web/password.mjs");
 
 function printHelp() {
   console.log(`Uso: gerar-senha [opções]
 
 Opções:
-  --length N       Comprimento (8–64). Padrão: 16.
+  --length N       Comprimento (${MIN_LENGTH}–${MAX_LENGTH}). Padrão: 16.
   --count N        Quantidade (1–${MAX_COUNT}). Padrão: 1.
   --no-lower       Excluir minúsculas (padrão: incluir).
   --no-upper       Excluir maiúsculas.

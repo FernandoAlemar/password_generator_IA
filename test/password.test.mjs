@@ -50,6 +50,29 @@ test("validate rejeita comprimento fora do intervalo", () => {
   assert.equal(validate({ ...base, length: MAX_LENGTH }).ok, true);
 });
 
+/**
+ * Garante que o teto exportado em `MAX_LENGTH` se reflete em `validate` e em `generatePassword`.
+ * Assim, ao alterar só `MAX_LENGTH` em `password.mjs`, este cenário continua explícito na suíte.
+ */
+test("comprimento máximo MAX_LENGTH: validate aceita e generatePassword gera exatamente esse tamanho", () => {
+  const base = paramsFromFlags(MAX_LENGTH, "LUDS", false);
+  assert.equal(validate(base).ok, true);
+  assert.equal(validate({ ...base, length: MAX_LENGTH + 1 }).ok, false);
+  const over = validate({ ...base, length: MAX_LENGTH + 1 });
+  assert.ok(
+    over.ok === false && over.message.includes(String(MAX_LENGTH + 1)),
+    over.message,
+  );
+  for (let i = 0; i < 25; i += 1) {
+    const pwd = generatePassword(base);
+    assert.equal(
+      pwd.length,
+      MAX_LENGTH,
+      `esperado comprimento ${MAX_LENGTH}, obtido ${pwd.length}`,
+    );
+  }
+});
+
 test("validate rejeita quando nenhum conjunto está ativo", () => {
   const r = validate({
     length: 12,

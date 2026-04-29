@@ -152,7 +152,7 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 | Letra | Significado | Preenchimento (este projeto) |
 |-------|-------------|------------------------------|
 | **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**: `web/index.html`, `web/password.mjs`, `web/app.mjs`, `web/styles.css`, `cli.mjs`, `test/password.test.mjs`; front estático; CLI Node; testes `node:test`; aleatoriedade com **`crypto.getRandomValues`**. |
-| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia no navegador e/ou saída na CLI; mensagens de erro claras em português; **testes automatizados** do núcleo (`npm test`); **código 100% documentado (JSDoc + regra abaixo)**. |
+| **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–65 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia no navegador e/ou saída na CLI; mensagens de erro claras em português; **testes automatizados** do núcleo (`npm test`); **código 100% documentado (JSDoc + regra abaixo)**. |
 | **S** — Estilo e convenções | Padrões | **Conventional Commits** em português; JS legível, sem dependências de build obrigatórias; **obrigatório:** documentação inline completa no mesmo PR/commit que introduz o código. |
 | **T** — Tom | Como escrever | Textos de UI, mensagens de erro e **JSDoc** em **português** (ou termos técnicos universais quando inevitáveis), diretos. |
 | **A** — Audiência | Quem usa | Usuário final no navegador; corretor/colegas lendo o repositório; quem mantém o JS precisa entender funções só lendo os comentários. |
