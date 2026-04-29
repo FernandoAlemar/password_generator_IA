@@ -20,7 +20,7 @@ Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para 
 
 **Nota:** em `file://`, o botão **Copiar resultado** pode não funcionar; nesse caso usa a Opção 2.
 
-**Opção 2 — servidor HTTP local (recomendado para clipboard):** sirva a pasta `web/` com qualquer servidor de arquivos estáticos do seu ambiente (por exemplo extensão **Live Server** / “Simple Browser” no editor, ou o preview HTTP que você já usa). Acesse a URL que o servidor indicar (em geral algo como `http://127.0.0.1:...`). Assim a API de **copiar** costuma funcionar melhor do que em `file://`.
+**Opção 2 — servidor HTTP local (recomendado para clipboard):** sirva a pasta `web/` com qualquer servidor de arquivos estáticos do seu ambiente (por exemplo extensão **Live Server** / “Simple Browser” no editor, ou o preview HTTP que você já usa). Acesse a URL que o servidor indicar (em geral algo como `http://127.0.0.1:...`). Assim a API de **copiar** costuma funcionar melhor do que em `file://`. Quando **Copiar resultado** funciona, aparece uma **mensagem verde** (“Senha copiada…”) por alguns segundos e depois some sozinha.
 
 **Opção 3 — linha de comando (Node.js):** na raiz do repositório, execute `npm install` (registra o binário localmente) e use `npx gerar-senha --help` ou, em desenvolvimento, `node cli.mjs --length 20 --count 2`. Cada senha sai em uma linha no stdout; erros de validação vão para stderr e o processo termina com código **2**.
 
@@ -30,7 +30,7 @@ Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para 
 
 - [web/index.html](web/index.html) — página e formulário
 - [web/password.mjs](web/password.mjs) — núcleo: validação e geração com Web Crypto (**JSDoc**)
-- [web/app.mjs](web/app.mjs) — formulário, eventos e cópia para o clipboard
+- [web/app.mjs](web/app.mjs) — formulário, eventos e cópia para o clipboard (mensagem verde de confirmação após copiar com sucesso)
 - [web/styles.css](web/styles.css) — estilos
 - [cli.mjs](cli.mjs) — CLI que importa o mesmo `password.mjs`
 - [package.json](package.json) — `type: "module"`, `engines.node`, `bin.gerar-senha` e script `test`

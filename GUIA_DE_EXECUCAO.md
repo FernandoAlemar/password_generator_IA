@@ -38,7 +38,7 @@ cd d:\gerarSenha
 Sirva a pasta **`web/`** como site estático com a ferramenta que preferir no seu ambiente (extensão de **Live Server** / preview no editor, hospedagem estática de teste, etc.). Acesse a URL indicada (em geral `http://127.0.0.1` com alguma porta).
 
 - Use **Gerar** para criar senhas conforme o formulário.
-- **Copiar resultado** usa `navigator.clipboard` (costuma exigir contexto `http(s):`, não `file:`).
+- **Copiar resultado** usa `navigator.clipboard` (costuma exigir contexto `http(s):`, não `file:`). Em caso de sucesso, a página mostra uma **mensagem verde** de confirmação (“Senha copiada…” / “Senhas copiadas…”) durante cerca de 3,5 s (`#copyFeedback`, `role="status"`, `aria-live="polite"`).
 
 ### Linha de comando (mesma lógica que o front)
 

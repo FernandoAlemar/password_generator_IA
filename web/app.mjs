@@ -41,11 +41,44 @@ function hideError() {
   el.classList.remove("visible");
 }
 
+/** @type {ReturnType<typeof setTimeout> | undefined} */
+let copyFeedbackTimer;
+
+/** Esconde a mensagem de confirmação de cópia. */
+function hideCopyFeedback() {
+  const el = document.getElementById("copyFeedback");
+  el.textContent = "";
+  el.classList.remove("visible");
+  if (copyFeedbackTimer !== undefined) {
+    clearTimeout(copyFeedbackTimer);
+    copyFeedbackTimer = undefined;
+  }
+}
+
+/**
+ * Mostra confirmação após copiar para o clipboard; some automaticamente.
+ * @param {string} message
+ */
+function showCopyFeedback(message) {
+  const el = document.getElementById("copyFeedback");
+  el.textContent = message;
+  el.classList.add("visible");
+  if (copyFeedbackTimer !== undefined) {
+    clearTimeout(copyFeedbackTimer);
+  }
+  copyFeedbackTimer = setTimeout(() => {
+    el.classList.remove("visible");
+    el.textContent = "";
+    copyFeedbackTimer = undefined;
+  }, 3500);
+}
+
 /**
  * Handler do botão Gerar: valida, gera `count` senhas e preenche `#output`.
  */
 function onGenerate() {
   hideError();
+  hideCopyFeedback();
   const params = readParams();
   const count = readCount();
 
@@ -72,6 +105,7 @@ function onGenerate() {
  */
 async function onCopy() {
   hideError();
+  hideCopyFeedback();
   const text = document.getElementById("output").textContent.trim();
   if (!text) {
     showError("Gere ao menos uma senha antes de copiar.");
@@ -79,6 +113,12 @@ async function onCopy() {
   }
   try {
     await navigator.clipboard.writeText(text);
+    const linhas = text.split("\n").filter((l) => l.length > 0).length;
+    const msg =
+      linhas > 1
+        ? "Senhas copiadas para a área de transferência."
+        : "Senha copiada para a área de transferência.";
+    showCopyFeedback(msg);
   } catch {
     showError("Não foi possível copiar (permissão ou contexto inseguro).");
   }

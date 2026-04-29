@@ -170,6 +170,20 @@ button.secondary:hover {
   display: block;
 }
 
+#copyFeedback {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(127, 217, 154, 0.14);
+  color: var(--success);
+  font-size: 0.9rem;
+  display: none;
+}
+
+#copyFeedback.visible {
+  display: block;
+}
+
 .note {
   margin-top: 1.5rem;
   font-size: 0.8rem;
