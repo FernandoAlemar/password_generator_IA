@@ -66,7 +66,7 @@ Na raiz:
 npm test
 ```
 
-Referência da suíte: [`test/password.test.mjs`](test/password.test.mjs) (`node:test`), cobrindo `validate`, geração dentro do alfabeto, `requireEach` e fumo de unicidade. Esperado: todas as linhas com **pass** e **fail 0**.
+Referência da suíte: [`test/password.test.mjs`](test/password.test.mjs) (`node:test`), cobrindo `validate`, geração dentro do alfabeto, `requireEach` e smoke test de unicidade. Esperado: todas as linhas com **pass** e **fail 0**.
 
 ---
 

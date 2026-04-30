@@ -43,7 +43,7 @@ Com **HTTP** (não `file://`), **Copiar resultado** costuma funcionar; surge uma
 
 **Opção 3 — linha de comando (Node.js):** na raiz do repositório, execute `npm install` (registra o binário localmente) e use `npx gerar-senha --help` ou, em desenvolvimento, `node cli.mjs --length 20 --count 2`. Cada senha sai em uma linha no stdout; erros de validação vão para stderr e o processo termina com código **2**.
 
-**Testes (`npm test`):** na raiz, com Node 19+, `npm test` corre a suíte [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) — validação de parâmetros, caracteres só do alfabeto permitido, política “um de cada conjunto” com `requireEach` e uma verificação de fumo de unicidade entre gerações.
+**Testes (`npm test`):** na raiz, com Node 19+, `npm test` corre a suíte [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) — validação de parâmetros, caracteres só do alfabeto permitido, política “um de cada conjunto” com `requireEach` e um smoke test de unicidade entre gerações.
 
 ## Estrutura
 

@@ -55,7 +55,7 @@ O navegador continua a usar só ficheiros estáticos servidos a partir de `web/`
 Na **raiz** do repositório (com Node 19+):
 
 1. `npm test` — executa [`node:test`](https://nodejs.org/api/test.html) sobre [test/password.test.mjs](test/password.test.mjs).
-2. O ficheiro importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e uma verificação de fumo de unicidade entre várias gerações.
+2. O ficheiro importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e um smoke test de unicidade entre várias gerações.
 
 Equivalente direto: `node --test ./test/password.test.mjs`.
 
