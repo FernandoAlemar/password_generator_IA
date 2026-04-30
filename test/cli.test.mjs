@@ -60,3 +60,15 @@ test("CLI: --help retorna 0", () => {
   assert.equal(r.status, 0);
   assert.ok((r.stdout || "").includes("Uso:"));
 });
+
+test("CLI: opcao desconhecida termina com 2 e stderr amigavel", () => {
+  const r = runCli(["--foo-inexistente"]);
+  assert.equal(r.status, 2, r.stderr);
+  assert.ok(
+    (r.stderr || "").includes("reconhecida") ||
+      (r.stderr || "").includes("help") ||
+      (r.stderr || "").includes("Unknown"),
+    r.stderr,
+  );
+});
+

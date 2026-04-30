@@ -30,21 +30,32 @@ Opções:
 `);
 }
 
-const { values } = parseArgs({
-  args: process.argv.slice(2),
-  options: {
-    length: { type: "string", default: "16" },
-    count: { type: "string", default: "1" },
-    "no-lower": { type: "boolean" },
-    "no-upper": { type: "boolean" },
-    "no-digits": { type: "boolean" },
-    "no-symbols": { type: "boolean" },
-    "require-each": { type: "boolean" },
-    help: { type: "boolean", short: "h" },
-  },
-  strict: true,
-  allowPositionals: false,
-});
+let values;
+try {
+  ({ values } = parseArgs({
+    args: process.argv.slice(2),
+    options: {
+      length: { type: "string", default: "16" },
+      count: { type: "string", default: "1" },
+      "no-lower": { type: "boolean" },
+      "no-upper": { type: "boolean" },
+      "no-digits": { type: "boolean" },
+      "no-symbols": { type: "boolean" },
+      "require-each": { type: "boolean" },
+      help: { type: "boolean", short: "h" },
+    },
+    strict: true,
+    allowPositionals: false,
+  }));
+} catch (err) {
+  console.error(
+    "Opção de linha de comando não reconhecida. Use --help para listar as opções suportadas.",
+  );
+  if (err && typeof err.message === "string") {
+    console.error(err.message);
+  }
+  process.exit(2);
+}
 
 if (values.help) {
   printHelp();

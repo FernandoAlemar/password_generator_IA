@@ -43,7 +43,7 @@ Com **HTTP** (não `file://`), **Copiar resultado** costuma funcionar; surge uma
 
 **Opção 3 — linha de comando (Node.js):** na raiz do repositório, execute `npm install` (registra o binário localmente) e use `npx gerar-senha --help` ou, em desenvolvimento, `node cli.mjs --length 20 --count 2`. Cada senha sai em uma linha no stdout; erros de validação vão para stderr e o processo termina com código **2**.
 
-**Testes (`npm test`):** na raiz, com Node 19+, `npm test` executa a suite [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) — validação de parâmetros, caracteres só do alfabeto permitido, política “um de cada conjunto” com `requireEach` e um smoke test de unicidade entre gerações.
+**Testes (`npm test`):** na raiz, com Node 19+, `npm test` executa [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) (núcleo: `validate`, geração, `requireEach`, smoke test de unicidade) e [test/cli.test.mjs](test/cli.test.mjs) (CLI: flags inválidas, códigos de saída, `--help`).
 
 ## Estrutura
 
@@ -53,7 +53,8 @@ Com **HTTP** (não `file://`), **Copiar resultado** costuma funcionar; surge uma
 - [web/styles.css](web/styles.css) — estilos
 - [cli.mjs](cli.mjs) — CLI que importa o mesmo `password.mjs`
 - [package.json](package.json) — `type: "module"`, `engines.node`, `bin.gerar-senha` e script `test`
-- [test/password.test.mjs](test/password.test.mjs) — testes automatizados do núcleo (`npm test`)
+- [test/password.test.mjs](test/password.test.mjs) — testes do núcleo (`npm test`)
+- [test/cli.test.mjs](test/cli.test.mjs) — testes de integração da CLI (`npm test`)
 - [Demo.md](Demo.md) — roteiro de demonstração técnica 
 
 ## Segurança (lembretes)
@@ -89,7 +90,7 @@ Este projeto utilizou **IA generativa** (por exemplo no Cursor) para:
 
 - **estruturar o repositório** — organização em núcleo compartilhado (`web/password.mjs`), interface web (`web/app.mjs`, `index.html`, estilos) e CLI Node (`cli.mjs`, `package.json`);
 - **produzir e ajustar o código-fonte** com base em **prompts** alinhados aos requisitos (comprimento, conjuntos de caracteres, política mínima, quantidade, `crypto.getRandomValues`, etc.);
-- **criar e evoluir os testes automatizados** (`test/password.test.mjs`, `npm test` / [`node:test`](https://nodejs.org/api/test.html)).
+- **criar e evoluir os testes automatizados** (`test/password.test.mjs`, `test/cli.test.mjs`, `npm test` / [`node:test`](https://nodejs.org/api/test.html)).
 
 A IA também ajudou na **criação e no refinamento dos próprios prompts**, incluindo o encaixe com o framework **CO-STAR** (ver a seção seguinte e o [GUIA de execução, CO-STAR](GUIA_DE_EXECUCAO.md#11-co-star-exemplo-para-este-mvp)).
 
@@ -124,5 +125,7 @@ docs(readme): atualiza instruções de execução local
 
   
 
+
+Integração contínua: em push ou pull request para `main` ou `master`, o workflow [.github/workflows/ci.yml](.github/workflows/ci.yml) executa `npm run lint` (sintaxe com `node --check`) e `npm test` (Node 20). Localmente: `npm run lint` e `npm test`.
 
 Mais detalhes em [GUIA_DE_EXECUCAO.md](GUIA_DE_EXECUCAO.md). Roteiro de apresentação: [Demo.md](Demo.md).

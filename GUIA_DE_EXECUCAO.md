@@ -54,10 +54,10 @@ O navegador continua usando apenas arquivos estáticos servidos a partir de `web
 
 Na **raiz** do repositório (com Node 19+):
 
-1. `npm test` — executa [`node:test`](https://nodejs.org/api/test.html) sobre [test/password.test.mjs](test/password.test.mjs).
-2. O arquivo importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e um smoke test de unicidade entre várias gerações.
+1. `npm test` — executa [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) (núcleo) e [test/cli.test.mjs](test/cli.test.mjs) (CLI: opções inválidas, códigos de saída).
+2. O arquivo `password.test.mjs` importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e um smoke test de unicidade entre várias gerações.
 
-Equivalente direto: `node --test ./test/password.test.mjs`.
+Equivalente direto: `node --test ./test/password.test.mjs ./test/cli.test.mjs`.
 
 ---
 
@@ -72,6 +72,7 @@ Equivalente direto: `node --test ./test/password.test.mjs`.
 | [cli.mjs](cli.mjs) (raiz) | CLI Node; importa `password.mjs` |
 | [package.json](package.json) | `type: "module"`, `bin`, `engines`, script `test` |
 | [test/password.test.mjs](test/password.test.mjs) | Testes do núcleo (`npm test` / `node:test`) |
+| [test/cli.test.mjs](test/cli.test.mjs) | Testes de integração da CLI (`npm test`) |
 
 ---
 
@@ -104,7 +105,7 @@ flowchart LR
 - [ ] `web/index.html` abre no navegador e o formulário funciona
 - [ ] Com servidor local, “Copiar resultado” funciona quando aplicável
 - [ ] `npx gerar-senha --help` e geração na CLI funcionam (Node 19+)
-- [ ] `npm test` passa (testes do `password.mjs`)
+- [ ] `npm run lint` e `npm test` passam (núcleo em `password.test.mjs` e CLI em `cli.test.mjs`)
 - [ ] README atualizado e repositório no Git com histórico claro
 
 ---
@@ -151,7 +152,7 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 
 | Letra | Significado | Preenchimento (este projeto) |
 |-------|-------------|------------------------------|
-| **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**: `web/index.html`, `web/password.mjs`, `web/app.mjs`, `web/styles.css`, `cli.mjs`, `test/password.test.mjs`; front estático; CLI Node; testes `node:test`; aleatoriedade com **`crypto.getRandomValues`**. |
+| **C** — Contexto | Projeto, stack, restrições | Repositório **gerarSenha**: `web/index.html`, `web/password.mjs`, `web/app.mjs`, `web/styles.css`, `cli.mjs`, `test/password.test.mjs`, `test/cli.test.mjs`; front estático; CLI Node; testes `node:test`; aleatoriedade com **`crypto.getRandomValues`**. |
 | **O** — Objetivo | O que deve ser entregue | Ajustar ou revisar geração de senhas (8–64 caracteres), conjuntos opcionais, política mínima, quantidade até 20, cópia no navegador e/ou saída na CLI; mensagens de erro claras em português; **testes automatizados** do núcleo (`npm test`); **código 100% documentado (JSDoc + regra abaixo)**. |
 | **S** — Estilo e convenções | Padrões | **Conventional Commits** em português; JS legível, sem dependências de build obrigatórias; **obrigatório:** documentação inline completa no mesmo PR/commit que introduz o código. |
 | **T** — Tom | Como escrever | Textos de UI, mensagens de erro e **JSDoc** em **português** (ou termos técnicos universais quando inevitáveis), diretos. |

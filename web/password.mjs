@@ -95,6 +95,10 @@ export function validate(params) {
 }
 
 /**
+ * Gera uma senha a partir de `params`.
+ * Não invoca {@link validate}: o chamador deve passar parâmetros já validados (a página e a CLI
+ * fazem isso antes de chamar). Parâmetros inválidos podem produzir string vazia, tamanho incorreto
+ * ou exceções vindas de `secureChoice` (pool vazio).
  * @param {GenerationParams} params
  * @returns {string}
  */

@@ -12,6 +12,7 @@
   },
   "scripts": {
     "cli": "node cli.mjs",
-    "test": "node --test ./test/password.test.mjs ./test/cli.test.mjs"
+    "test": "node --test ./test/password.test.mjs ./test/cli.test.mjs",
+    "lint": "node --check cli.mjs web/app.mjs web/password.mjs test/cli.test.mjs test/password.test.mjs"
   }
 }

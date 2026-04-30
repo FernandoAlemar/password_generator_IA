@@ -76,7 +76,7 @@ Na raiz:
 npm test
 ```
 
-Referência da suite: [`test/password.test.mjs`](test/password.test.mjs) (`node:test`), cobrindo `validate`, geração dentro do alfabeto, `requireEach` e smoke test de unicidade. Esperado: todas as linhas com **pass** e **fail 0**.
+Referência: [`test/password.test.mjs`](test/password.test.mjs) (núcleo) e [`test/cli.test.mjs`](test/cli.test.mjs) (CLI), via `node:test`. Cobertura inclui `validate`, geração dentro do alfabeto, `requireEach`, smoke test de unicidade e integração da CLI. Esperado: todas as linhas com **pass** e **fail 0**.
 
 ---
 
