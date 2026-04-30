@@ -55,6 +55,14 @@ test("CLI: geração bem-sucedida (stdout, código 0)", () => {
   assert.equal(lines[0].length, 12);
 });
 
+test("CLI: varias senhas no mesmo comando sao distintas", () => {
+  const r = runCli(["--length", "14", "--count", "8"]);
+  assert.equal(r.status, 0, r.stderr);
+  const lines = (r.stdout || "").trim().split(/\r?\n/).filter(Boolean);
+  assert.equal(lines.length, 8);
+  assert.equal(new Set(lines).size, 8);
+});
+
 test("CLI: --help retorna 0", () => {
   const r = runCli(["--help"]);
   assert.equal(r.status, 0);

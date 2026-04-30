@@ -8,7 +8,7 @@
 
 **Solução deste projeto:** gerador **local** — a página roda no **navegador**, a CLI no **Node** — com a mesma lógica em [`web/password.mjs`](web/password.mjs) e aleatoriedade só com **`crypto.getRandomValues`**.
 
-**Escopo:** comprimento 8–64, conjuntos opcionais (minúsculas, maiúsculas, dígitos, símbolos), política “garantir um de cada conjunto”, até 20 senhas por geração na web. **Fora de escopo:** servidor que armazene ou trate senhas em backend próprio.
+**Escopo:** comprimento 8–64, conjuntos opcionais (minúsculas, maiúsculas, dígitos, símbolos), política “garantir um de cada conjunto”, até 20 senhas por geração na web; **no mesmo pedido**, as N linhas são **distintas entre si** (`Set` + retentativas no núcleo). **Fora de escopo:** servidor que armazene ou trate senhas em backend próprio; o projeto **não persiste** senhas geradas.
 
 ---
 
@@ -53,7 +53,7 @@ npx gerar-senha --length 16 --count 2
 
 Alternativa em desenvolvimento: `node cli.mjs --length 16 --count 2`.
 
-Mostrar uma ou duas linhas de senha no **stdout**; erros de validação da CLI vão para **stderr** com código de saída **2**.
+Mostrar uma ou duas linhas de senha no **stdout**; com `--count` maior, cada linha é **diferente das outras nessa execução**. Erros de validação (ou impossibilidade de obter N distintas com os parâmetros) vão para **stderr** com código de saída **2**.
 
 ---
 
@@ -76,7 +76,7 @@ Na raiz:
 npm test
 ```
 
-Referência: [`test/password.test.mjs`](test/password.test.mjs) (núcleo) e [`test/cli.test.mjs`](test/cli.test.mjs) (CLI), via `node:test`. Cobertura inclui `validate`, geração dentro do alfabeto, `requireEach`, smoke test de unicidade e integração da CLI. Esperado: todas as linhas com **pass** e **fail 0**.
+Referência: [`test/password.test.mjs`](test/password.test.mjs) (núcleo) e [`test/cli.test.mjs`](test/cli.test.mjs) (CLI), via `node:test`. Cobertura inclui `validate`, geração dentro do alfabeto, `requireEach`, `generateDistinctPasswords`, smoke test de aleatoriedade e integração da CLI (incluindo lote com linhas distintas). Esperado: todas as linhas com **pass** e **fail 0**.
 
 ---
 

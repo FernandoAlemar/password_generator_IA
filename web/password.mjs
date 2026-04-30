@@ -9,6 +9,9 @@ export const MIN_LENGTH = 8;
 export const MAX_LENGTH = 64;
 export const MAX_COUNT = 20;
 
+/** Máximo de tentativas de {@link generatePassword} por posição ao montar um lote sem repetição. */
+export const MAX_DISTINCT_ATTEMPTS_PER_PASSWORD = 100;
+
 export const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
 export const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export const DIGITS = "0123456789";
@@ -127,3 +130,42 @@ export function generatePassword(params) {
   secureShuffle(chars);
   return chars.join("");
 }
+
+/**
+ * Gera `count` senhas **distintas entre si** neste mesmo pedido (em memória; não persiste entre
+ * recarregamentos nem entre execuções da CLI). Reutiliza {@link generatePassword}; se o espaço de
+ * senhas for pequeno demais em relação a `count`, pode falhar após {@link MAX_DISTINCT_ATTEMPTS_PER_PASSWORD}
+ * tentativas por posição.
+ * @param {GenerationParams} params
+ * @param {number} count quantidade desejada (o chamador deve validar intervalo, ex. 1–{@link MAX_COUNT})
+ * @returns {{ ok: true, passwords: string[] } | { ok: false, message: string }}
+ */
+export function generateDistinctPasswords(params, count) {
+  if (typeof count !== "number" || !Number.isFinite(count) || !Number.isInteger(count) || count < 1) {
+    return { ok: false, message: `Quantidade inválida: ${String(count)}.` };
+  }
+  const seen = new Set();
+  const passwords = [];
+  for (let i = 0; i < count; i += 1) {
+    let added = false;
+    for (let t = 0; t < MAX_DISTINCT_ATTEMPTS_PER_PASSWORD; t += 1) {
+      const pwd = generatePassword(params);
+      if (!seen.has(pwd)) {
+        seen.add(pwd);
+        passwords.push(pwd);
+        added = true;
+        break;
+      }
+    }
+    if (!added) {
+      return {
+        ok: false,
+        message:
+          `Não foi possível gerar ${count} senhas distintas neste pedido com os parâmetros atuais. ` +
+          "Tente reduzir a quantidade, aumentar o comprimento ou incluir mais conjuntos de caracteres.",
+      };
+    }
+  }
+  return { ok: true, passwords };
+}
+

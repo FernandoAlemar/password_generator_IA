@@ -4,11 +4,11 @@
 
 import {
   MAX_COUNT,
-  generatePassword,
+  generateDistinctPasswords,
   validate,
 } from "./password.mjs";
 
-/** Lê o formulário e devolve o objeto usado por {@link validate} e {@link generatePassword}. */
+/** Lê o formulário e devolve o objeto usado por {@link validate} e {@link generateDistinctPasswords}. */
 function readParams() {
   const length = Number.parseInt(document.getElementById("length").value, 10);
   return {
@@ -100,11 +100,12 @@ function onGenerate() {
     return;
   }
 
-  const lines = [];
-  for (let i = 0; i < count; i += 1) {
-    lines.push(generatePassword(params));
+  const batch = generateDistinctPasswords(params, count);
+  if (!batch.ok) {
+    showError(batch.message);
+    return;
   }
-  document.getElementById("output").textContent = lines.join("\n");
+  document.getElementById("output").textContent = batch.passwords.join("\n");
 }
 
 /**

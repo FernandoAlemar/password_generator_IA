@@ -43,7 +43,9 @@ Com **HTTP** (não `file://`), **Copiar resultado** costuma funcionar; surge uma
 
 **Opção 3 — linha de comando (Node.js):** na raiz do repositório, execute `npm install` (registra o binário localmente) e use `npx gerar-senha --help` ou, em desenvolvimento, `node cli.mjs --length 20 --count 2`. Cada senha sai em uma linha no stdout; erros de validação vão para stderr e o processo termina com código **2**.
 
-**Testes (`npm test`):** na raiz, com Node 19+, `npm test` executa [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) (núcleo: `validate`, geração, `requireEach`, smoke test de unicidade) e [test/cli.test.mjs](test/cli.test.mjs) (CLI: flags inválidas, códigos de saída, `--help`).
+**Unicidade só no pedido atual (web e CLI):** ao pedir **N** senhas de uma vez, o núcleo usa `generateDistinctPasswords` em [web/password.mjs](web/password.mjs): um `Set` guarda as senhas já geradas nesse lote; para cada posição, chama `generatePassword` até obter uma string nova ou esgotar **até 100 tentativas** por posição (`MAX_DISTINCT_ATTEMPTS_PER_PASSWORD`). Se não for possível (espaço de senhas pequeno demais para N distintas), a interface mostra erro e a CLI termina com código **2**. Isto **não** garante que uma senha nunca se repita noutro clique ou noutra execução — só evita linhas duplicadas **no mesmo resultado**. O projeto **não grava** senhas; para guardar as que importam, use um **gestor de senhas**.
+
+**Testes (`npm test`):** na raiz, com Node 19+, `npm test` executa [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) (núcleo: `validate`, geração, `generateDistinctPasswords`, `requireEach`, smoke test de aleatoriedade) e [test/cli.test.mjs](test/cli.test.mjs) (CLI: flags inválidas, códigos de saída, `--help`, lote com linhas distintas).
 
 ## Estrutura
 
@@ -61,6 +63,7 @@ Com **HTTP** (não `file://`), **Copiar resultado** costuma funcionar; surge uma
 
 - Prefira senhas longas (16+) e um gerenciador de senhas.
 - Não envie senhas geradas para servidores desconhecidos; a página roda **no seu navegador** e a CLI roda **localmente no Node** — sem backend próprio neste repositório.
+- O gerador **não persiste** senhas em disco nem em servidor; unicidade “sem repetir linha” aplica-se **apenas ao lote atual** (ver parágrafo **Unicidade só no pedido atual** acima).
 
 ## Arquitetura (diagrama Mermaid)
 

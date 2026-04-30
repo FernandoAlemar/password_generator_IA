@@ -13,6 +13,7 @@ import {
   MIN_LENGTH,
   SYMBOLS,
   UPPERCASE,
+  generateDistinctPasswords,
   generatePassword,
   validate,
 } from "../web/password.mjs";
@@ -41,6 +42,17 @@ function paramsFromFlags(length, flags, requireEach) {
     requireEach,
   };
 }
+
+test("generateDistinctPasswords retorna senhas distintas no mesmo pedido", () => {
+  const p = paramsFromFlags(16, "LUDS", false);
+  const r = generateDistinctPasswords(p, 15);
+  assert.equal(r.ok, true);
+  assert.equal(r.passwords.length, 15);
+  assert.equal(new Set(r.passwords).size, 15);
+  for (const pwd of r.passwords) {
+    assert.equal(pwd.length, 16);
+  }
+});
 
 test("validate rejeita comprimento fora do intervalo", () => {
   const base = paramsFromFlags(16, "LUDS", false);

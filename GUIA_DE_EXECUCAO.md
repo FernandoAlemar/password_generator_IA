@@ -55,9 +55,11 @@ O navegador continua usando apenas arquivos estáticos servidos a partir de `web
 Na **raiz** do repositório (com Node 19+):
 
 1. `npm test` — executa [`node:test`](https://nodejs.org/api/test.html) em [test/password.test.mjs](test/password.test.mjs) (núcleo) e [test/cli.test.mjs](test/cli.test.mjs) (CLI: opções inválidas, códigos de saída).
-2. O arquivo `password.test.mjs` importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e um smoke test de unicidade entre várias gerações.
+2. O arquivo `password.test.mjs` importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos), `generateDistinctPasswords` (senhas distintas no mesmo pedido) e um smoke test de aleatoriedade entre gerações.
 
 Equivalente direto: `node --test ./test/password.test.mjs ./test/cli.test.mjs`.
+
+**Comportamento de unicidade (web e CLI):** para quantidade maior que 1, a página e a CLI usam `generateDistinctPasswords` no mesmo [web/password.mjs](web/password.mjs). Internamente, um `Set` acumula as senhas já obtidas **naquele** pedido; após cada `generatePassword`, se a string já existir no `Set`, gera-se outra, até **100 tentativas por posição** (`MAX_DISTINCT_ATTEMPTS_PER_PASSWORD`). Não há armazenamento entre recarregamentos ou entre execuções da CLI; para senhas que precise guardar, use um gestor de senhas.
 
 ---
 

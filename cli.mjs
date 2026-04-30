@@ -12,7 +12,7 @@ if (!globalThis.crypto?.getRandomValues) {
   globalThis.crypto = webcrypto;
 }
 
-const { validate, generatePassword, MAX_COUNT, MAX_LENGTH, MIN_LENGTH } =
+const { validate, generateDistinctPasswords, MAX_COUNT, MAX_LENGTH, MIN_LENGTH } =
   await import("./web/password.mjs");
 
 function printHelp() {
@@ -98,6 +98,11 @@ if (!v.ok) {
   process.exit(2);
 }
 
-for (let i = 0; i < count; i += 1) {
-  console.log(generatePassword(params));
+const batch = generateDistinctPasswords(params, count);
+if (!batch.ok) {
+  console.error(batch.message);
+  process.exit(2);
+}
+for (const pwd of batch.passwords) {
+  console.log(pwd);
 }
