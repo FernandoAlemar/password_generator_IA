@@ -24,18 +24,18 @@ cd d:\gerarSenha
 
 ## 3. Rodar localmente
 
-### Abrir a página no navegador (ficheiro local)
+### Abrir a página no navegador (arquivo local)
 
-1. Abre no Explorador de ficheiros a pasta **`web/`** do projeto (ex.: após `cd d:\gerarSenha`, o ficheiro é `d:\gerarSenha\web\index.html`).
-2. **Duplo clique** em **`index.html`**, ou **arrasta** o ficheiro para uma janela do Chrome, Edge ou Firefox.  
-   Outra forma: no navegador, menu **Ficheiro → Abrir ficheiro…** (`Ctrl+O`) e seleciona `index.html` dentro de `web/`.
-3. Verifica na barra de endereços um URL **`file:///…/web/index.html`**; a página carrega `styles.css` e `app.mjs` a partir da mesma pasta.
+1. Abra no Explorador de Arquivos a pasta **`web/`** do projeto (ex.: após `cd d:\gerarSenha`, o arquivo é `d:\gerarSenha\web\index.html`).
+2. **Duplo clique** em **`index.html`**, ou **arraste** o arquivo para uma janela do Chrome, Edge ou Firefox.  
+   Outra forma: no navegador, menu **Arquivo → Abrir arquivo…** (`Ctrl+O`) e selecione `index.html` dentro de `web/`.
+3. Verifique na barra de endereços um URL **`file:///…/web/index.html`**; a página carrega `styles.css` e `app.mjs` a partir da mesma pasta.
 
-**Limitação:** com `file://`, **Copiar resultado** costuma falhar ou pedir permissões extra; para testar a cópia, usa a secção seguinte (servidor HTTP).
+**Limitação:** com `file://`, **Copiar resultado** costuma falhar ou pedir permissões extra; para testar a cópia, use a seção seguinte (servidor HTTP).
 
 ### Servidor HTTP (recomendado para testar “Copiar resultado”)
 
-Sirva a pasta **`web/`** como site estático com a ferramenta que preferir no seu ambiente (extensão de **Live Server** / preview no editor, hospedagem estática de teste, etc.). Acesse a URL indicada (em geral `http://127.0.0.1` com alguma porta).
+Use um servidor estático para servir a pasta **`web/`**, com a ferramenta que preferir no seu ambiente (extensão **Live Server**, preview no editor, hospedagem estática de teste, etc.). Acesse o URL indicado (em geral `http://127.0.0.1` com alguma porta).
 
 - Use **Gerar** para criar senhas conforme o formulário.
 - **Copiar resultado** usa `navigator.clipboard` (costuma exigir contexto `http(s):`, não `file:`). Em caso de sucesso, a página mostra uma **mensagem verde** de confirmação (“Senha copiada…” / “Senhas copiadas…”) durante cerca de 3,5 s (`#copyFeedback`, `role="status"`, `aria-live="polite"`).
@@ -44,18 +44,18 @@ Sirva a pasta **`web/`** como site estático com a ferramenta que preferir no se
 
 Na **raiz** do clone (não dentro de `web/`):
 
-1. Instale e registe o binário local: `npm install`
+1. Instale e registre o binário local: `npm install`
 2. Ajuda: `npx gerar-senha --help`
 3. Exemplo: `npx gerar-senha --length 24 --count 3 --require-each` ou `node cli.mjs ...`
 
-O navegador continua a usar só ficheiros estáticos servidos a partir de `web/`; a CLI importa `web/password.mjs` no Node.
+O navegador continua usando apenas arquivos estáticos servidos a partir de `web/`; a CLI importa `web/password.mjs` no Node.
 
 ### Testes automatizados (`npm test`)
 
 Na **raiz** do repositório (com Node 19+):
 
 1. `npm test` — executa [`node:test`](https://nodejs.org/api/test.html) sobre [test/password.test.mjs](test/password.test.mjs).
-2. O ficheiro importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e um smoke test de unicidade entre várias gerações.
+2. O arquivo importa [web/password.mjs](web/password.mjs) e cobre: regras de `validate`, geração só com caracteres dos conjuntos ativos, política `requireEach` (quatro tipos) e um smoke test de unicidade entre várias gerações.
 
 Equivalente direto: `node --test ./test/password.test.mjs`.
 
@@ -81,7 +81,7 @@ Equivalente direto: `node --test ./test/password.test.mjs`.
 
 ```mermaid
 flowchart LR
-  User[Usuario]
+  User[Usuário]
   UI[HTML_CSS]
   App[app_mjs]
   Lib[password_mjs]
@@ -160,7 +160,7 @@ Ao pedir **código-fonte** (humano ou IA generativa), use sempre o framework **C
 
 **Exemplo de prompt curto (inclui obrigatoriedade de documentar):**
 
-> **Contexto:** Repositório `gerarSenha`, ficheiros `web/password.mjs` / `web/app.mjs`.  
+> **Contexto:** Repositório `gerarSenha`, arquivos `web/password.mjs` / `web/app.mjs`.  
 > **Objetivo:** Limitar quantidade máxima a 10 em vez de 20.  
 > **Estilo:** Conventional Commits; não adicionar frameworks; **todo código entregue com JSDoc completo**.  
 > **Tom:** técnico, português.  

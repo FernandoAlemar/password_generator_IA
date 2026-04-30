@@ -4,9 +4,9 @@
 
 ## 1. Problema e escopo
 
-**Problema (30–45 s):** senhas fracas ou previsíveis; serviços opacos em que o utilizador não controla onde a senha passa; uso indevido de `Math.random()` para segurança.
+**Problema (30–45 s):** senhas fracas ou previsíveis; serviços opacos em que o usuário não controla onde a senha passa; uso indevido de `Math.random()` para segurança.
 
-**Solução deste projeto:** gerador **local** — a página corre no **navegador**, a CLI no **Node** — com a mesma lógica em [`web/password.mjs`](web/password.mjs) e aleatoriedade só com **`crypto.getRandomValues`**.
+**Solução deste projeto:** gerador **local** — a página roda no **navegador**, a CLI no **Node** — com a mesma lógica em [`web/password.mjs`](web/password.mjs) e aleatoriedade só com **`crypto.getRandomValues`**.
 
 **Escopo:** comprimento 8–64, conjuntos opcionais (minúsculas, maiúsculas, dígitos, símbolos), política “garantir um de cada conjunto”, até 20 senhas por geração na web. **Fora de escopo:** servidor que armazene ou trate senhas em backend próprio.
 
@@ -14,7 +14,7 @@
 
 ## 2. Arquitetura resumida (45–60 s)
 
-Um único **núcleo** (`password.mjs`) é usado por dois **consumidores**: a página (`app.mjs` + `index.html`) e a linha de comando (`cli.mjs`). O diagrama Mermaid está no [README.md](README.md) (secção **Arquitetura**).
+Um único **núcleo** (`password.mjs`) é usado por dois **consumidores**: a página (`app.mjs` + `index.html`) e a linha de comando (`cli.mjs`). O diagrama Mermaid está no [README.md](README.md) (seção **Arquitetura**).
 
 ```mermaid
 flowchart LR
@@ -33,8 +33,8 @@ flowchart LR
 
 **Web**
 
-1. Abrir [`web/index.html`](web/index.html) (ficheiro local) **ou** servir a pasta `web/` com um servidor HTTP (recomendado para testar **Copiar resultado**).
-2. Clicar em **Gerar** com valores por omissão e mostrar o resultado na área de texto.
+1. Abrir [`web/index.html`](web/index.html) (arquivo local) **ou** servir a pasta `web/` com um servidor HTTP (recomendado para testar **Copiar resultado**).
+2. Clicar em **Gerar** com valores padrão e mostrar o resultado na área de texto.
 
 **CLI** (na **raiz** do repositório, com [Node.js](https://nodejs.org/) 19+)
 
@@ -66,7 +66,7 @@ Na raiz:
 npm test
 ```
 
-Referência da suíte: [`test/password.test.mjs`](test/password.test.mjs) (`node:test`), cobrindo `validate`, geração dentro do alfabeto, `requireEach` e smoke test de unicidade. Esperado: todas as linhas com **pass** e **fail 0**.
+Referência da suite: [`test/password.test.mjs`](test/password.test.mjs) (`node:test`), cobrindo `validate`, geração dentro do alfabeto, `requireEach` e smoke test de unicidade. Esperado: todas as linhas com **pass** e **fail 0**.
 
 ---
 
