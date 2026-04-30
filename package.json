@@ -1,6 +1,6 @@
 {
   "name": "password-generator-ia",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Gerador de senhas seguras — web estática + CLI Node",
   "type": "module",
