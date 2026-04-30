@@ -1,7 +1,5 @@
 # Roteiro de demonstração técnica
 
-Este ficheiro sugere uma **sequência de 3 a 5 minutos** para apresentar o projeto **Gerador de senhas seguras** (vídeo ou defesa oral). Não há API REST nem CRUD: o equivalente é a **interface web** + **CLI Node** + **testes automatizados**.
-
 ---
 
 ## 1. Problema e escopo
@@ -42,8 +40,7 @@ flowchart LR
 
 ```bash
 npm install
-npx gerar-senha --help
-node cli.mjs --length 20 --count 2
+npx serve web
 ```
 
 Mostrar uma ou duas linhas de senha no terminal e mencionar que erros de validação vão para **stderr** com código de saída **2**.
@@ -52,7 +49,7 @@ Mostrar uma ou duas linhas de senha no terminal e mencionar que erros de valida�
 
 ## 4. Fluxo principal da interface (45–60 s)
 
-Em vez de CRUD, o fluxo é **configurar → gerar → (opcional) copiar**.
+O fluxo é **configurar → gerar → (opcional) copiar**.
 
 1. Alterar **comprimento** ou desmarcar um conjunto (ex.: só minúsculas + dígitos) e **Gerar** de novo.
 2. Opcional: marcar **Garantir ao menos um caractere de cada conjunto marcado** e gerar.
