@@ -89,7 +89,7 @@ flowchart LR
 
 ## Uso de IA no desenvolvimento
 
-Este projeto utilizou **IA generativa** (por exemplo no Cursor) para:
+Este projeto utilizou **IA generativa** no contexto de **Cursos IA** e ferramentas como o **Cursor**, com modelos **Sonnet 4.6** e **GPT-5.5**, para:
 
 - **estruturar o repositório** — organização em núcleo compartilhado (`web/password.mjs`), interface web (`web/app.mjs`, `index.html`, estilos) e CLI Node (`cli.mjs`, `package.json`);
 - **produzir e ajustar o código-fonte** com base em **prompts** alinhados aos requisitos (comprimento, conjuntos de caracteres, política mínima, quantidade, `crypto.getRandomValues`, etc.);
