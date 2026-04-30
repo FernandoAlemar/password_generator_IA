@@ -2,6 +2,8 @@
 
 Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para comprimento (8–64), conjuntos de caracteres, política mínima (ao menos um de cada conjunto marcado) e quantidade (1–20). A mesma lógica de validação e geração está em **`web/password.mjs`**, reutilizada pela página (`app.mjs`) e pela **CLI Node** (`cli.mjs`). A aleatoriedade usa apenas **`crypto.getRandomValues`** (sem `Math.random()`).
 
+**Demonstração técnica (3–5 min):** roteiro em [Demo.md](Demo.md).
+
 ## Requisitos
 
 - Navegador moderno (Chrome, Firefox, Edge ou equivalente) — para a interface em `web/`
@@ -35,6 +37,7 @@ Aplicação **estática** em HTML/CSS/JavaScript: formulário no navegador para 
 - [cli.mjs](cli.mjs) — CLI que importa o mesmo `password.mjs`
 - [package.json](package.json) — `type: "module"`, `engines.node`, `bin.gerar-senha` e script `test`
 - [test/password.test.mjs](test/password.test.mjs) — testes automatizados do núcleo (`npm test`)
+- [Demo.md](Demo.md) — roteiro de demonstração técnica (3–5 min)
 
 ## Segurança (lembretes)
 
@@ -98,4 +101,4 @@ fix(web): corrige validação do comprimento mínimo
 docs(readme): atualiza instruções de execução local
 ```
 
-Mais detalhes em [GUIA_DE_EXECUCAO.md](GUIA_DE_EXECUCAO.md).
+Mais detalhes em [GUIA_DE_EXECUCAO.md](GUIA_DE_EXECUCAO.md). Roteiro de apresentação: [Demo.md](Demo.md).
