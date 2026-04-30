@@ -36,14 +36,24 @@ flowchart LR
 1. Abrir [`web/index.html`](web/index.html) (arquivo local) **ou** servir a pasta `web/` com um servidor HTTP (recomendado para testar **Copiar resultado**).
 2. Clicar em **Gerar** com valores padrão e mostrar o resultado na área de texto.
 
-**CLI** (na **raiz** do repositório, com [Node.js](https://nodejs.org/) 19+)
+**Servidor HTTP (opcional, na raiz do repositório)** — para `http(s):` e testar **Copiar resultado**:
 
 ```bash
 npm install
 npx serve web
 ```
 
-Mostrar uma ou duas linhas de senha no terminal e mencionar que erros de validação vão para **stderr** com código de saída **2**.
+Abrir o URL **Local** (ou **Network**) que o terminal indicar.
+
+**CLI** (na **raiz** do repositório, com [Node.js](https://nodejs.org/) 19+; após `npm install`):
+
+```bash
+npx gerar-senha --length 16 --count 2
+```
+
+Alternativa em desenvolvimento: `node cli.mjs --length 16 --count 2`.
+
+Mostrar uma ou duas linhas de senha no **stdout**; erros de validação da CLI vão para **stderr** com código de saída **2**.
 
 ---
 

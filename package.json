@@ -12,6 +12,6 @@
   },
   "scripts": {
     "cli": "node cli.mjs",
-    "test": "node --test ./test/password.test.mjs"
+    "test": "node --test ./test/password.test.mjs ./test/cli.test.mjs"
   }
 }

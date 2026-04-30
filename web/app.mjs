@@ -23,8 +23,7 @@ function readParams() {
 
 /** Quantidade de senhas a gerar (campo “Quantidade” no HTML). */
 function readCount() {
-  const c = Number.parseInt(document.getElementById("count").value, 10);
-  return Number.isFinite(c) ? c : 1;
+  return Number.parseInt(document.getElementById("count").value, 10);
 }
 
 /** Exibe mensagem de erro acima da área de resultado. @param {string} message */
@@ -82,8 +81,16 @@ function onGenerate() {
   const params = readParams();
   const count = readCount();
 
-  if (count < 1 || count > MAX_COUNT) {
-    showError(`Quantidade deve estar entre 1 e ${MAX_COUNT}.`);
+  if (
+    typeof count !== "number" ||
+    !Number.isFinite(count) ||
+    !Number.isInteger(count) ||
+    count < 1 ||
+    count > MAX_COUNT
+  ) {
+    showError(
+      `Quantidade deve ser um número inteiro entre 1 e ${MAX_COUNT}.`,
+    );
     return;
   }
 

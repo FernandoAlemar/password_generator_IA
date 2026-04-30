@@ -50,6 +50,25 @@ test("validate rejeita comprimento fora do intervalo", () => {
   assert.equal(validate({ ...base, length: MAX_LENGTH }).ok, true);
 });
 
+test("validate rejeita comprimento não inteiro, NaN ou infinito", () => {
+  const base = paramsFromFlags(16, "LUDS", false);
+  for (const length of [NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, 10.5, 12.7]) {
+    const r = validate({ ...base, length });
+    assert.equal(r.ok, false, `length=${length}`);
+    assert.ok(
+      r.message.includes("inteiro") || r.message.includes(String(length)),
+      r.message,
+    );
+  }
+});
+
+test("validate rejeita comprimento quando length não é número", () => {
+  const base = paramsFromFlags(16, "LUDS", false);
+  // @ts-expect-error teste de tipo inválido em runtime
+  const r = validate({ ...base, length: "16" });
+  assert.equal(r.ok, false);
+});
+
 /**
  * Garante que o teto exportado em `MAX_LENGTH` se reflete em `validate` e em `generatePassword`.
  * Assim, ao alterar só `MAX_LENGTH` em `password.mjs`, este cenário continua explícito na suíte.

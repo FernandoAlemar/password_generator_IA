@@ -51,8 +51,26 @@ if (values.help) {
   process.exit(0);
 }
 
-const length = Number.parseInt(values.length, 10);
-const count = Number.parseInt(values.count, 10);
+/** Aceita só inteiros decimais não negativos sem parte fracionária (`2.5` e `abc` falham). */
+function strictUIntFromString(raw) {
+  const t = String(raw).trim();
+  if (!/^\d+$/.test(t)) return NaN;
+  return Number.parseInt(t, 10);
+}
+
+const length = strictUIntFromString(values.length);
+const count = strictUIntFromString(values.count);
+
+function isValidPositiveInt(n) {
+  return typeof n === "number" && Number.isFinite(n) && Number.isInteger(n);
+}
+
+if (!isValidPositiveInt(count) || count < 1 || count > MAX_COUNT) {
+  console.error(
+    `Quantidade deve ser um número inteiro entre 1 e ${MAX_COUNT} (recebido: ${String(values.count)}).`,
+  );
+  process.exit(2);
+}
 
 const params = {
   length,
@@ -62,11 +80,6 @@ const params = {
   useSymbols: !values["no-symbols"],
   requireEach: Boolean(values["require-each"]),
 };
-
-if (count < 1 || count > MAX_COUNT) {
-  console.error(`Quantidade deve estar entre 1 e ${MAX_COUNT}.`);
-  process.exit(2);
-}
 
 const v = validate(params);
 if (!v.ok) {

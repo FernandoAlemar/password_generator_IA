@@ -63,6 +63,12 @@ function secureShuffle(arr) {
  */
 export function validate(params) {
   const { length, useLower, useUpper, useDigits, useSymbols, requireEach } = params;
+  if (typeof length !== "number" || !Number.isFinite(length) || !Number.isInteger(length)) {
+    return {
+      ok: false,
+      message: `Comprimento deve ser um número inteiro entre ${MIN_LENGTH} e ${MAX_LENGTH} (recebido: ${String(length)}).`,
+    };
+  }
   if (length < MIN_LENGTH || length > MAX_LENGTH) {
     return {
       ok: false,
