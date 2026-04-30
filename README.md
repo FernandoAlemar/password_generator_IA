@@ -61,6 +61,18 @@ flowchart LR
   App -->|atualiza_tela| User
 ```
 
+## Uso de IA no desenvolvimento
+
+Neste projeto utilizou-se **IA generativa** (por exemplo no Cursor) para:
+
+- **estruturar o repositório** — organização em núcleo partilhado (`web/password.mjs`), interface web (`web/app.mjs`, `index.html`, estilos) e CLI Node (`cli.mjs`, `package.json`);
+- **produzir e ajustar o código-fonte** com base em **prompts** alinhados aos requisitos (comprimento, conjuntos de caracteres, política mínima, quantidade, `crypto.getRandomValues`, etc.);
+- **criar e evoluir os testes automatizados** (`test/password.test.mjs`, `npm test` / [`node:test`](https://nodejs.org/api/test.html)).
+
+A IA também ajudou na **criação e no refinamento dos próprios prompts**, incluindo o encaixe com o framework **CO-STAR** (ver secção seguinte e o [GUIA de execução, CO-STAR](GUIA_DE_EXECUCAO.md#11-co-star-exemplo-para-este-mvp)).
+
+**Transparência:** o resultado foi sempre sujeito a **revisão humana** (comportamento, mensagens em português, consistência entre web, CLI e documentação).
+
 ## Prompt estruturado: CO-STAR
 
 Neste repositório, ao usar **IA para gerar ou alterar código-fonte**, o prompt deve seguir **CO-STAR** e a convenção do projeto exige que o **fonte entregue esteja integralmente documentado** (JSDoc em JavaScript; comentários/HTML onde fizer sentido). Detalhes e exemplo preenchido: [GUIA_DE_EXECUCAO.md, seção 11](GUIA_DE_EXECUCAO.md#11-co-star-exemplo-para-este-mvp).
